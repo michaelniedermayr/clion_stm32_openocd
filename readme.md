@@ -26,7 +26,7 @@ Here is a list of the software and tools we will use.
 Let’s start and setup the required software. This will take some time but is not too complicated.
 
 ### Setup ST-Link Utility and STM32CubeMX
-The ST-LINK Utility is software provided by ST for programming their microcontrollers. STM32CubeMX is a tool that allows a very simple configuration of  the STM32 microcontrollers and the generation of the corresponding initialization C code.
+The ST-LINK Utility is a software provided by ST for programming their microcontrollers. STM32CubeMX is a tool that allows a very simple configuration of  the STM32 microcontrollers and the generation of the corresponding initialization C code.
 * Download and install the [ST-Link Utility](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads) (you have to register and sign in).
 * Download and install the [STM32CubeMX](http://www.st.com/en/development-tools/stm32cubemx.html#getsoftware-scroll) (you have to register and sign in).
 
