@@ -27,14 +27,14 @@ Let’s start and setup the required software. This will take some time but is n
 
 ### Setup ST-Link Utility and STM32CubeMX
 The ST-LINK Utility is a software provided by ST for programming their microcontrollers. STM32CubeMX is a tool that allows a very simple configuration of  the STM32 microcontrollers and the generation of the corresponding initialization C code.
-* Download and install the [ST-Link Utility](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads) (you have to register and sign in).
+* Download and install the [ST-Link Utility](http://www.st.com/en/development-tools/stsw-link004.html#getsoftware-scroll) (you have to register and sign in).
 * Download and install the [STM32CubeMX](http://www.st.com/en/development-tools/stm32cubemx.html#getsoftware-scroll) (you have to register and sign in).
 
 ### Setup GNU Arm Embedded Toolchain
 This contains the C/C++ compiler for Arm Cortex-M processors (like the STM32s).
 * Download and install the [GNU Arm Embedded Toolchain](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads).
-* During installation you are asked if you want to add path to environment variable. Selected it.
-* Now you should be able to execute the toolchain from the command line. To check just open command line window and enter ‘arm-none-eabi-gcc --version’.
+* During installation you will be asked if you want to 'add path to environment variable'. Selected it!
+* Now you should be able to execute the toolchain from the command line. To test this, just open the command line window and enter ‘arm-none-eabi-gcc --version’.
 
 ### Setup MinGW
 The MinGW toolchain provides the GNU Compiler Collection (GCC) and the GNU Debugger (GDB) for windows.
@@ -52,8 +52,8 @@ There are different licences available for CLion. For example free licences for 
 ![clion_toolchain1](https://user-images.githubusercontent.com/8593661/37569629-90c5551e-2ae5-11e8-8f8a-3070cd345e0a.jpg)
 
 ### Setup openOCD Plugin in Clion
-Next we install the openOCD plugin. But let’s check first if the toolchain was installed the properly.
-Start Clion.
+Next we install the openOCD plugin. But let’s check first if the toolchain was installed properly.
+* Start Clion.
 * Create a new project.
 * Go to: File | Settings | Build, Execution, Deployment | Toolchains.
 * If you only see green check marks you are happy and can continue.
@@ -64,8 +64,8 @@ Now install the plugin.
 * Search for the plugin ‘OpenOCD + STM32CubeMX support’ and install it.
 * Restart CLion.
 * Go to: File | Settings | Build, Execution, Deployment | OpenOCD Support.
-* Set the location of the OpenOCD project for OpenOCD Home. (Remember: you downloaded and unzipped it  earlier).
-* You have to define the board config file as well. OpenOCD provides tons of those for all kinds of boards. Since we use the STM32F4 * discovery board for the first demo, you should select the corresponding config file (stm32f4discovery.cfg).
+* OpenOCD Home: Set the location of the OpenOCD project you have downloaded and unzipped earlier.
+* Board Config File: OpenOCD provides different config files for all kinds of boards. Since we use the STM32F4 discovery board for the first demo, you should select the corresponding config file (board/stm32f4discovery.cfg).
 ![clion_openocd](https://user-images.githubusercontent.com/8593661/37569648-bd49338a-2ae5-11e8-9e73-0a9752ffc0d0.jpg)
 
 ## Run the first demo
@@ -81,12 +81,13 @@ Let’s see if all drivers are installed properly and we can connect to the boar
 
 ### Generate the initial code with STM32CubeMX
 We use STM32CubeMX to generate the initial code base. In the next step, we will create the CLion project on top of that.
-Start STM32CubeMX.
+* Start STM32CubeMX.
 * Selected New Project.
 * Select the Board Selector-tab.
 * Search for stm32f4discovery and double-click on the corresponding board.
 * When you asked ‘Initialize all peripherals with their default Mode?’ select No. At the moment we only need the basic peripherals like the GPIO pins.
-* Now you should see that the pins PD12-PD15 of the MCU are already marked green and set to GPIO_Output. These pins are connected to the LEDs on the discovery which we want to let blink.
+* Now you should see that the pins PD12-PD15 of the MCU are already marked green and set to GPIO_Output. These pins are connected to the LEDs on the discovery board which we want to let blink.
+
 ![stm32cubemx](https://user-images.githubusercontent.com/8593661/37569687-37e623a0-2ae6-11e8-8a2c-05e3cf3fdab6.jpg)
 
 * Next click on: Project | Generate Code.
@@ -97,14 +98,14 @@ Start STM32CubeMX.
 
 ### Create the CLion project
 Now we import the generated code in CLion, update the CMake files with the plugin and download the code to the discovery board.
-Start CLion.
+* Start CLion.
 * Import the generated code: File | Import Project or from the welcome screen: Import Project from Sources.
-* If CLion asks you to ‘Import CMake Project’, just like OK.
-* Next click: Tools | Update CMake project with STM32CubeMX project. The plugin will perform its magic and rewrites the CMakeLists.txt file.
+* If CLion asks you to ‘Import CMake Project’, just click OK.
+* Next step, click: Tools | Update CMake project with STM32CubeMX project. The plugin will perform its magic and rewrites the CMakeLists.txt file.
 * If everything works, you should see this dialog. Now you should be able to program and debug the STM32 with CLion.
 ![clion_openocd_cmake](https://user-images.githubusercontent.com/8593661/37569704-715eccd6-2ae6-11e8-9b4d-c47bcbcf89ae.jpg)
 
-* Next step: Add the blinking code. Open the src/main.c file and go to the main while loop (line 102-109).
+* To add the blinking code, open the src/main.c file and go to the main while loop (line 102-109).
 ![clion_main](https://user-images.githubusercontent.com/8593661/37569710-8cd03e78-2ae6-11e8-8638-51f19563c201.jpg)
 
 * Replace the while-loop with the following code. This let’s the four leds blink on the discovery board.
@@ -135,22 +136,22 @@ while (1) {
 The code generated by STM32CubeMX is written in C. Unfortunately, C++ is not supported at the moment. If you want to use C++ nevertheless, you just have to make some adjustments.
 * Open the Windows Explorer and go to the location of your project.
 * Go to ‘your project\Drivers\STM32F4xx_HAL_Driver\Src’
-* Rename the filename extension from .c to .cpp.
-* Also rename extension of the file in ‘your project\Src’.
+* Rename the extensions of all files from .c to .cpp.
+* Also rename the extension of the files in ‘your project\Src’.
 * Start CLion.
 * Open CMakeLists.txt.
 * Search for the line PROJECT(projectname C ASM) and change it to PROJECT(projectname CXX ASM). This tells CMake to use the C++ compiler instead of the C compiler.
 * Rebuild CMake by clicking on Tools | CMake | Reload CMake Project.
 * Now you can use the full power of object oriented programming for your project.
-* Keep in mind that STM32CubeMX will overwrite these changes if you rerun the code generation. OpenOCD plugin will also restore the changes in CMakeLists.txt if you run it again by clicking on Tools | Update CMake project with STM32CubeMX project.
+* Keep in mind that STM32CubeMX will overwrite these changes if you rerun the code generation. The OpenOCD plugin will also restore the changes in CMakeLists.txt if you run it again by clicking on Tools | Update CMake project with STM32CubeMX project.
 
 ## Using an external ST-Link programmer
 Of course we can also use CLion to program and debug custom STM32 boards. For this purpose I use an generic ST-Link V2 programmer which you can buy online for just a couple of Euros. If you have no custom board available but want to test the programmer nevertheless, you can use the programmer in combination with the discovery board.
 
 ### Update the generic ST-Link V2 programmer
-First let’s see if the programmer is working and update to date.
+First, let’s see if the programmer is working and update to date.
 * Plugin the ST-Link V2 (don’t forget to unplug the discovery board).
-* Start the STM32 ST-Link Utility.
+* Start the ST-Link Utility.
 * Go to: ST-LINK | Firmware update.
 * A new dialog opens. Click on ‘Device connect’.
 * Next click ‘Yes >>>>’. Now the update should start.
@@ -162,15 +163,15 @@ I found an old flight control board for drone in my basement that runs on an STM
 
 #### To create a custom board config file:
 * Open windows explorer and go to location of the OpenOCD projects you have downloaded earlier.
-* Go to openOCD\scripts\board and create a file called stm32f4_stlink_programmer.cfg.
+* Go to openOCD\scripts\board and create a new file called 'stm32f4_stlink_programmer.cfg'.
 * Open the file with a text editor and add the following lines.
 ```
 source [find interface/stlink.cfg]
 source [find target/stm32f4x.cfg]
 ```
 * Open CLion.
-* Go to File | Settings | Build, Execution, Deployment | OpenOCD Support.
-* Set the Board Config File to stm32f4_stlink_programmer.cfg.
+* Go to: File | Settings | Build, Execution, Deployment | OpenOCD Support.
+* Set the Board Config File to 'stm32f4_stlink_programmer.cfg'.
 
 ### Program the discovery board with the ST-Link V2 programmer
 In order to program the discovery board with an external programmer, you have to make some modifications.
@@ -188,12 +189,12 @@ Connect the the external programmer with the discovery board.
 | 3.3V | VDD |
 | GND | GND |
 | RST | NRST |
-| SWCLK | D14 |
-| SWDIO | PD13 |
+| SWCLK | PA14 |
+| SWDIO | PA13 |
 
 <img src="https://user-images.githubusercontent.com/8593661/37569918-7e61ebd6-2ae9-11e8-8a87-c9299b5ea247.jpg" width="400">
 
-Don’t forget to select the custom board config file (see above).
-TIP: If you get an error message during programming the discovery board for the first time, just press the black reset button on the board once. This worked for me.
-Use the discovery board as an external programmer
+Don’t forget to select the custom board config file (see above). If you get an error message when you program the discovery board for the first time, just press the black reset button on the board. This worked for me.
+
+### Use the discovery board as an external programmer
 You can also use a discovery board to program other boards. In this case you have to remove the jumpers and the solder bridge as well. Now you can connect the target board to the SWD connector of the discovery board. For more information see the [official manual](http://www.st.com/en/evaluation-tools/stm32f4discovery.html).
